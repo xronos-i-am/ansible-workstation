@@ -1,0 +1,89 @@
+- name: Install
+  apt: pkg="{{ item }}" state=latest
+  with_items:
+    - postgresql-10
+    - postgresql-client-10
+    - postgresql-11
+    - postgresql-client-11
+    - libpq-dev
+    #- virtualenv
+  register: postgres_installed
+  notify:
+    - restart postgres
+
+- name: pg_hba.conf#local
+  replace:
+    path: "{{item}}"
+    regexp: '^local\s+all\s+all\s+peer$'
+    replace: "local all all md5"
+  with_items:
+    - /etc/postgresql/10/main/pg_hba.conf
+    - /etc/postgresql/11/main/pg_hba.conf
+  when: postgres_installed
+  ignore_errors: true
+
+- name: pg_hba.conf#postgres
+  replace:
+    path: "{{item}}"
+    regexp: '^postgres\s+all\s+all\s+(peer|ident)$'
+    replace: "postgres all all trust"
+  with_items:
+    - /etc/postgresql/10/main/pg_hba.conf
+    - /etc/postgresql/11/main/pg_hba.conf
+  when: postgres_installed
+  ignore_errors: true
+
+- name: postgresql.conf#port
+  replace:
+    path: "{{item.path}}"
+    regexp: '^port\s\d+$'
+    replace: "port {{item.port}}"
+  with_items:
+    - item:
+      path: /etc/postgresql/10/main/pg_hba.conf
+      port: 5432
+    - item:
+      path: /etc/postgresql/11/main/pg_hba.conf
+      port: 5433
+  when: postgres_installed
+  ignore_errors: true
+
+- name: Set postgres user password
+  become_user: postgres
+  command: psql -d postgres -p {{item}} -c "ALTER USER postgres with password '{{ root_password }}';"
+  with_items:
+    - 5432
+    - 5433
+  when: postgres_installed.changed
+
+- name: PGAdmin key
+  apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+- name: PGAdmin repo
+  apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ {{codename}}-pgdg main" filename="pgadmin"
+
+- name: PGAdmin install
+  apt: name=pgadmin3 update_cache=yes state=latest
+
+- name: Add quick launch icon
+  include_role: name="shared/quick_launch"
+  vars:
+    binary: pgadmin3
+
+#- name: PGAdmin virtualenv
+#  shell: cd /usr/lib/ && virtualenv pgadmin4 && cd pgadmin4 && source bin/activate
+#  args:
+#    executable: /bin/bash
+#  changed_when: false
+
+#- name: Download PGAdmin
+#  get_url:
+##    url: "https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v1.4/pip/pgadmin4-1.4-py2.py3-none-any.whl"
+#    dest: "/usr/lib/pgadmin4"
+
+#- name: PGAdmin requirements
+#  pip: name="psycopg2" state=latest
+
+#- name: PGAdmin install
+#  pip: 
+#    name: "/usr/lib/pgadmin4/pgadmin4-1.4-py2.py3-none-any.whl"
+#    virtualenv: /usr/lib/pgadmin4

@@ -1,0 +1,16 @@
+- name: Install
+  apt: name=ntp state=latest
+
+- name: Setup servers
+  replace: 
+    path: "/etc/ntp.conf"
+    backup: true
+    replace: 'pool \1.ru.pool.ntp.org \2'
+    regexp: "{{item.regexp}}"
+  with_items:
+    - {regexp: '^pool (0).ubuntu.pool.ntp.org (.*)'}
+    - {regexp: '^pool (1).ubuntu.pool.ntp.org (.*)'}
+    - {regexp: '^pool (2).ubuntu.pool.ntp.org (.*)'}
+    - {regexp: '^pool (3).ubuntu.pool.ntp.org (.*)'}
+  notify: 
+    - restart ntp

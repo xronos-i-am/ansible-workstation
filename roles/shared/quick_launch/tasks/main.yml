@@ -1,0 +1,15 @@
+- name: Check quick launch icon
+  find: 
+    paths: "~{{user}}/.config/xfce4/panel/"
+    contains: "^Exec=.*{{binary}}"
+    recurse: yes
+    patterns: "*.desktop"
+  register: check_quick_launch_icon
+  changed_when: check_quick_launch_icon.matched == 0
+
+# https://forum.xfce.org/viewtopic.php?pid=45752#p45752
+- name: Add quick launch icon
+  shell: "xfce4-panel --add=launcher {{binary}}.desktop"
+  when: check_quick_launch_icon.matched == 0
+  become: true
+  become_user: "{{user}}"

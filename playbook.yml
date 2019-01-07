@@ -1,0 +1,66 @@
+---
+
+- name: setup workstation
+  hosts: 127.0.0.1
+  connection: local
+  become: yes
+  gather_facts: no
+
+  pre_tasks:
+    - name: Get ubuntu release
+      command: "sed 's/DISTRIB_CODENAME=//;t;d' /etc/upstream-release/lsb-release"
+      register: get_ubuntu_release
+      changed_when: False
+    - name: Get ubuntu version
+      command: "sed 's/DISTRIB_RELEASE=//;t;d' /etc/upstream-release/lsb-release"
+      register: get_ubuntu_version
+      changed_when: False
+    - name: apt-get upgrade
+      apt: upgrade=yes
+      changed_when: False
+    - name: apt-get update
+      apt: update_cache=yes
+      changed_when: False
+    - locale_gen: name=ru_RU.UTF-8 state=present
+    - locale_gen: name=en_US.UTF-8 state=present
+
+  vars:
+    codename: "{{get_ubuntu_release.stdout}}"
+    ubuntu_version: "{{get_ubuntu_version.stdout}}"
+    user: "{{lookup('env', 'USER')}}"
+    db_root_password: "{{lookup('env', 'DB_ROOT_PASSWORD')}}"
+
+  tasks:
+    - debug: msg="Ubuntu {{ubuntu_version}} {{codename}}"
+    - debug: msg="Username {{user}}"
+    - include: tasks/packages.yml
+
+  roles:
+    - { role: ntp }
+    - { role: nginx }
+    - { role: keepass }
+    - { role: java }
+    - { role: redis }
+    - { role: mariadb, root_password: db_root_password }
+    - { role: postgres, root_password: db_root_password }
+    - { role: ruby }
+    - { role: doublecmd }
+    - { role: sublime_text }
+    - { role: google_chrome }
+    - { role: ssh_agent }
+    - { role: keyboard_shortcuts }
+    - { role: wine }
+    - { role: nodejs }
+    - { role: yarn }
+    - { role: memcached }
+    - { role: transmission }
+    - { role: tarantool }
+    - { role: asdf }
+    - { role: elixir }
+    - { role: yandex_disk }
+    - { role: teamviewer }
+    - { role: docker }
+    - { role: lightdm }
+    - { role: ice_book_reader }
+    - { role: sketchup }
+    - { role: xfce_panel }

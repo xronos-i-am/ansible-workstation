@@ -1,0 +1,23 @@
+- name: Reset
+  replace:
+    path: "~{{user}}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
+    regexp: '{{item.regexp}}'
+    replace: '\1{{item.replace}}'
+    backup: yes
+  with_items:
+    - item:
+      regexp: '$(\s+)<property name="&lt;Alt&gt;F7" type="string".+'
+      replace: <property name="&lt;Alt&gt;F7" type="empty"/>
+    - item:
+      regexp: '$(\s+)<property name="&lt;Control&gt;F1" type="string".+'
+      replace: <property name="&lt;Control&gt;F1" type="empty"/>
+    - item:
+      regexp: '$(\s+)<property name="&lt;Primary&gt;F1" type="string".+'
+      replace: <property name="&lt;Primary&gt;F1" type="empty"/>
+    - item:
+      regexp: '$(\s+)<property name="&lt;Control&gt;F2" type="string".+'
+      replace: <property name="&lt;Control&gt;F2" type="empty"/>
+    - item:
+      regexp: '$(\s+)<property name="&lt;Primary&gt;F2" type="string".+'
+      replace: <property name="&lt;Primary&gt;F2" type="empty"/>
+  ignore_errors: true

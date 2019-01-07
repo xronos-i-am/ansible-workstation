@@ -1,0 +1,6 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Google\SketchUp8\GLConfig\Display]
+"FIRST_TIME"=dword:00000000
+"HW_OK"=dword:00000001
+

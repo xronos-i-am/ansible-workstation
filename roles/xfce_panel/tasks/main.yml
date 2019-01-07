@@ -1,0 +1,24 @@
+# https://forum.xfce.org/viewtopic.php?pid=45732#p45732
+- name: Gen panel id
+  shell: xfconf-query -c xfce4-panel -p /panels | tail -1
+  changed_when: False
+  become: true
+  become_user: "{{user}}"
+  register: get_panel_id
+
+- debug: msg="Panel id {{get_panel_id.stdout}}"
+
+- name: Check panel size
+  shell: xfconf-query -c xfce4-panel -p /panels/panel-{{get_panel_id.stdout}}/size | grep 40
+  register: check_panel_size
+  changed_when: check_panel_size.rc == 1
+  failed_when: check_panel_size.rc > 1
+  become: true
+  become_user: "{{user}}"
+
+# https://forum.xfce.org/viewtopic.php?pid=32021#p32021
+- name: Set size
+  shell: xfconf-query -c xfce4-panel -p /panels/panel-{{get_panel_id.stdout}}/size --type int --set 40
+  when: check_panel_size.rc == 1
+  become: true
+  become_user: "{{user}}"

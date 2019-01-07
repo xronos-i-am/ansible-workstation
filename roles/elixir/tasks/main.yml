@@ -1,0 +1,13 @@
+- name: Check if plugin is already installed
+  shell: test -d ~{{user}}/.asdf/plugins/elixir && echo "elixir"
+  become: true
+  become_user: "{{user}}"
+  register: elixir_check
+  changed_when: elixir_check.rc == 1
+  failed_when: elixir_check.rc > 1
+
+- name: Install elixir
+  shell: "~{{user}}/.asdf/bin/asdf plugin-add elixir"
+  become: true
+  become_user: "{{user}}"
+  when: elixir_check.rc == 1

@@ -1,0 +1,25 @@
+- name: Key
+  apt_key: url="http://download.opensuse.org/repositories/home:Alexx2000/xUbuntu_{{ubuntu_version}}/Release.key"
+
+- name: Repo
+  apt_repository: repo="deb http://download.opensuse.org/repositories/home:/Alexx2000/xUbuntu_{{ubuntu_version}}/ /" filename=doublecmd
+
+- name: apt-get install doublecmd-gtk
+  apt: name=doublecmd-gtk state=latest update_cache=true
+  register: doublecmd_installed
+
+- name: set config
+  copy:
+    dest: "~{{user}}/.config/doublecmd/"
+    src: "{{item}}"
+    owner: "{{user}}"
+    group: "{{user}}"
+    backup: true
+  with_fileglob:
+    - "../templates/*"
+  when: doublecmd_installed.changed
+
+- name: Add quick launch icon
+  include_role: name="shared/quick_launch"
+  vars:
+    binary: doublecmd

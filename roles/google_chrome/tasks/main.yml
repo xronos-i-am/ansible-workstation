@@ -1,0 +1,10 @@
+- name: Repo
+  apt_repository: repo="deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" state=present filename="google-chrome"
+
+- name: apt-get install google-chrome-stable
+  apt: update_cache=yes name="google-chrome-stable" state=latest
+
+- name: Add quick launch icon
+  include_role: name="shared/quick_launch"
+  vars:
+    binary: google-chrome

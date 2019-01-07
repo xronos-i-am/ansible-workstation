@@ -1,0 +1,2 @@
+- name: restart mysql
+  systemd: name=mariadb state=restarted

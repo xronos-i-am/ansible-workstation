@@ -1,0 +1,43 @@
+- name: Repo deps
+  apt_repository: repo="deb http://security.ubuntu.com/ubuntu xenial-security main" filename=xenial_security_backports
+
+- name: apt-get install gnupg2 curl apt-transport-https
+  apt: name="{{item}}" state=latest
+  with_items:
+    - gnupg2
+    - curl
+    - apt-transport-https
+    - libicu55
+    - libreadline-dev
+
+# - name: Check if libreadline6 is installed
+#   command: dpkg-query -W libreadline6
+#   register: check_libreadline6_is_installed
+#   failed_when: check_libreadline6_is_installed.rc > 1
+#   changed_when: check_libreadline6_is_installed.rc == 1
+
+# https://packages.ubuntu.com/xenial/amd64/libreadline6/download
+# - name: Download libreadline6
+#   get_url: 
+#     url: http://de.archive.ubuntu.com/ubuntu/pool/main/r/readline6/libreadline6_6.3-8ubuntu2_amd64.deb
+#     dest: /tmp/libreadline6.deb"
+#   when: check_libreadline6_is_installed.rc == 1
+- name: apt-get install libreadline6
+  apt: deb=http://de.archive.ubuntu.com/ubuntu/pool/main/r/readline6/libreadline6_6.3-8ubuntu2_amd64.deb
+
+- name: Key
+  apt_key: url=http://download.tarantool.org/tarantool/1.7/gpgkey
+
+# - name: Drop old repos
+#   file: path="{{item}}" state=absent
+#   with_fileglob:
+#     - /etc/apt/sources.list.d/*tarantool*.list
+
+# https://tarantool.io/en/download/os-installation/1.7/ubuntu/
+- name: Repo
+  apt_repository: repo="deb http://download.tarantool.org/tarantool/1.7/ubuntu/ xenial main" filename=tarantool
+- name: Repo src
+  apt_repository: repo="deb-src http://download.tarantool.org/tarantool/1.7/ubuntu/ xenial main" filename=tarantool
+
+- name: apt-get install tarantool
+  apt: name=tarantool update_cache=yes state=latest

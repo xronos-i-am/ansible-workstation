@@ -1,0 +1,13 @@
+- name: Check if plugin is already installed
+  shell: test -d ~{{user}}/.asdf/plugins/erlang && echo "erlang"
+  become: true
+  become_user: "{{user}}"
+  register: erlang_check
+  changed_when: erlang_check.rc == 1
+  failed_when: erlang_check.rc > 1
+
+- name: Install erlang
+  shell: "~{{user}}/.asdf/bin/asdf plugin-add erlang"
+  become: true
+  become_user: "{{user}}"
+  when: erlang_check.rc == 1

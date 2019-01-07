@@ -1,0 +1,47 @@
+# https://github.com/jdauphant/ansible-role-packaging/blob/master/tasks/Debian.yml
+
+- name: Deps
+  apt: name="cabextract" state="latest"
+
+- name: Key
+  apt_key: url=https://dl.winehq.org/wine-builds/Release.key
+
+- name: Repo
+  apt_repository: repo='deb https://dl.winehq.org/wine-builds/ubuntu/ {{codename}} main' filename="wine"
+
+- name: apt-get install winehq-stable
+  apt: name=winehq-stable state=latest install_recommends=yes update_cache=yes
+
+- name: winetrics
+  get_url:
+    url: "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks"
+    dest: "/usr/local/bin/winetricks"
+    mode: 0755
+
+- name: .wine dir
+  file:
+    path: "~{{user}}/.wine"
+    state: directory
+  become: yes
+  become_user: "{{user}}"
+
+- name: winetrics completions
+  get_url:
+    url: "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks.bash-completion"
+    dest: "~{{user}}/.wine/winetricks.bash-completion"
+  become: yes
+  become_user: "{{user}}"
+
+- name: configure winetricks completions
+  copy:
+    src: ../templates/winetricks.sh
+    dest: /etc/profile.d/winetricks.sh
+    owner: root
+    mode: 0755
+
+# - name: Winecfg
+#   command: winecfg
+#   become: yes
+#   become_user: "{{user}}"
+#   args:
+#     chdir: "~{{user}}"

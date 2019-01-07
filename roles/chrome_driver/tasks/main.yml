@@ -1,0 +1,45 @@
+- name: Download driver version
+  get_url: 
+    url: http://chromedriver.storage.googleapis.com/LATEST_RELEASE
+    dest: /tmp/chromedriver_version
+  changed_when: false
+
+- name: Get driver version
+  slurp:
+    src: /tmp/chromedriver_version
+  register: get_chrome_driver_version
+  changed_when: false
+
+- debug: msg="Latest chrome driver {{get_chrome_driver_version['content'] | b64decode}}"
+
+- name: Check chrome driver version
+  shell: "chromedriver --version | grep {{get_chrome_driver_version['content'] | b64decode}}"
+  register: chromedriver_version_check
+  changed_when: chromedriver_version_check.rc == 1
+  failed_when: chromedriver_version_check.rc > 1
+
+- name: Download
+  unarchive: 
+    src: http://chromedriver.storage.googleapis.com/{{get_chrome_driver_version['content'] | b64decode}}/chromedriver_linux64.zip
+    dest: /tmp
+    remote_src: yes
+  when: chromedriver_version_check.rc == 1
+
+- name: Move
+  copy:
+    src: /tmp/chromedriver
+    dest: /usr/local/bin/chromedriver
+    mode: 0755
+    owner: root
+    group: root
+  when: chromedriver_version_check.rc == 1
+
+- name: Clean
+  file:
+    path: "{{item}}"
+    state: absent
+  with_items:
+    - /tmp/chromedriver_version
+    - /tmp/chromedriver
+  ignore_errors: true
+  changed_when: false

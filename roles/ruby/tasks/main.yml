@@ -1,0 +1,52 @@
+- name: Remove old packages
+  apt: name={{ item }} state=absent
+  with_items:
+   - ruby
+   - ruby1.8
+   - ruby1.9.1
+
+- name: Install packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - build-essential
+    - autoconf
+    - libssl-dev
+    - libyaml-dev
+    - libreadline7
+    - libreadline-dev
+    - zlib1g
+    - zlib1g-dev
+    - libjemalloc-dev
+    - chromium-chromedriver
+
+# https://stackoverflow.com/a/30191850/2041969
+- name: Get latest ruby
+  shell: rbenv install -l | grep -v - | tail -1 | tr -d '[[:space:]]'
+  become: true
+  become_user: "{{user}}"
+  changed_when: false
+  register: get_latest_ruby
+
+- debug: msg="Ruby {{get_latest_ruby.stdout}}"
+
+- name: Check if ruby is already installed
+  shell: "rbenv versions | grep {{get_latest_ruby.stdout}}"
+  become: true
+  become_user: "{{user}}"
+  register: rbenv_ruby_check
+  changed_when: rbenv_ruby_check.rc == 1
+  failed_when: rbenv_ruby_check.rc > 1
+
+- name: rbenv install
+  shell: 'export PATH="${HOME}/.rbenv/bin:${PATH}" && eval "$(rbenv init -)" && {{item}}'
+  become: true
+  become_user: "{{user}}"
+  args:
+    executable: "/bin/bash"
+  ignore_errors: true
+  with_items:
+    - 'CONFIGURE_OPTS="--disable-install-rdoc --disable-install-doc --with-jemalloc --jit --enable-shared=true" rbenv install {{get_latest_ruby.stdout}}'
+    - "rbenv global {{get_latest_ruby.stdout}}"
+    - "gem install bundler"
+  when: rbenv_ruby_check.rc == 1
+  

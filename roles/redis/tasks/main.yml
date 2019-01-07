@@ -1,0 +1,2 @@
+- name: apt-get install redis-server
+  apt: name=redis-server state=latest

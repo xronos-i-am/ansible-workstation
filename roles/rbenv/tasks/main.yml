@@ -1,0 +1,24 @@
+- name: rbenv download
+  git:
+    repo: https://github.com/rbenv/rbenv.git
+    dest: ~{{ user }}/.rbenv
+
+- name: Clone ruby-build
+  git: 
+    repo: https://github.com/rbenv/ruby-build.git
+    dest: ~{{ user }}/.rbenv/plugins/ruby-build
+    force: true
+
+- name: Install rbenv loader script
+  copy:
+    src: ../templates/rbenv.sh
+    dest: /etc/profile.d/rbenv.sh
+    owner: root
+    mode: 0755
+
+#- name: rbenv install
+#  shell: /tmp/rbenv-installer
+#  become: yes
+#  become_user: "{{user}}"
+#  args:
+#    executable: "/bin/bash"

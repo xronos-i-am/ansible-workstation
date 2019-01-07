@@ -1,0 +1,5 @@
+- name: Install packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - python-dev
+    - python-setuptools

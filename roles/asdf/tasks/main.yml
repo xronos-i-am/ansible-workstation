@@ -1,0 +1,13 @@
+- name: git clone asdf
+  git:
+    repo: https://github.com/asdf-vm/asdf.git 
+    dest: "~{{user}}/.asdf"
+  become: true
+  become_user: "{{user}}"
+
+- name: asdf autostart
+  copy:
+    src: ../templates/asdf.sh
+    dest: /etc/profile.d/asdf.sh
+    owner: root
+    mode: 0755

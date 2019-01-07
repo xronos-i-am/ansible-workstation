@@ -1,0 +1,11 @@
+- name: apt-get install memcached
+  apt: name=memcached state=latest
+
+- name: apt-get install libmemcached-tools
+  apt: name=libmemcached-tools state=latest
+
+- name: inc memory limit
+  replace:
+    path: /etc/memcached.conf
+    regexp: '^-m \d+$'
+    replace: "-m 256"

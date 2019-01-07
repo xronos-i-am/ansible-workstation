@@ -1,0 +1,10 @@
+- name: apt-get install git
+  apt: name=git state=latest
+
+- name: set git email
+  shell: "git config --global user.email \"{{lookup('env', 'EMAIL')}}\""
+  changed_when: false
+
+- name: set git name
+  shell: "git config --global user.name \"{{lookup('env', 'NAME')}}\""
+  changed_when: false

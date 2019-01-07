@@ -1,0 +1,27 @@
+- name: apt-get install keychain
+  apt: name=keychain state=latest
+
+- name: Agent autostart
+  lineinfile:
+    path: "~{{user}}/.bashrc"
+    regexp: "eval.+keychain.+{{item}}$"
+    line: "eval $(keychain --eval {{item}})"
+  with_items:
+    - id_rsa
+    - id_rsa_github
+
+# - name: add agent to autorun
+#   lineinfile:
+#     path: "~{{user}}/.profile"
+#     regexp: "{{item.regexp}}"
+#     line: "{{item.line}}"
+#   with_items:
+#     - item:
+#       regexp: /^eval \$\(ssh-agent -s\)$/
+#       line: eval $(ssh-agent -s)
+#     - item:
+#       regexp: /^ssh-add \~\/\.ssh\/id_rsa$/
+#       line: ssh-add ~/.ssh/id_rsa
+#     - item:
+#       regexp: /^ssh-add \~\/\.ssh\/id_rsa_github$/
+#       line: ssh-add ~/.ssh/id_rsa_github

@@ -1,0 +1,19 @@
+- name: Download
+  get_url: 
+    url: http://dev43.ru/ICE Book Reader.zip
+    dest: /tmp/ICE Book Reader.zip
+  changed_when: false
+
+- name: Unarchive
+  unarchive: 
+    src: /tmp/ICE Book Reader.zip
+    dest: "~{{user}}/.wine/drive_c/Program Files (x86)"
+  become: true
+  become_user: "{{user}}"
+
+- name: Clean
+  file:
+    path: /tmp/ICE Book Reader.zip
+    state: absent
+  ignore_errors: true
+  changed_when: false

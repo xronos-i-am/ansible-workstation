@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doublecmd DCVersion="0.7.8 beta">
+  <ExtensionAssociation>
+    <FileType>
+      <Name>sublime</Name>
+      <IconFile>/opt/sublime_text/Icon/32x32/sublime-text.png</IconFile>
+      <ExtensionList>rb|ex|exs|yml|js|css|haml|slim|erb|html|rake|thor|json|xml|coffee</ExtensionList>
+      <Actions>
+        <Action>
+          <Name>Edit</Name>
+          <Command>/opt/sublime_text/sublime_text</Command>
+          <Params>%f</Params>
+        </Action>
+        <Action>
+          <Name>Open</Name>
+          <Command>/opt/sublime_text/sublime_text</Command>
+          <Params>%f</Params>
+        </Action>
+      </Actions>
+    </FileType>
+  </ExtensionAssociation>
+</doublecmd>
