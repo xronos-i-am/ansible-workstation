@@ -48,5 +48,6 @@
     - p7zip-full
     - httpie
     - mpv
+    - smartmontools
 
 
