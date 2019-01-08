@@ -22,4 +22,4 @@
 - name: Add quick launch icon
   include_role: name="shared/quick_launch"
   vars:
-    binary: doublecmd
+    config: doublecmd.desktop

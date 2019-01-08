@@ -67,7 +67,7 @@
 - name: Add quick launch icon
   include_role: name="shared/quick_launch"
   vars:
-    binary: pgadmin3
+    config: pgadmin3.desktop
 
 #- name: PGAdmin virtualenv
 #  shell: cd /usr/lib/ && virtualenv pgadmin4 && cd pgadmin4 && source bin/activate

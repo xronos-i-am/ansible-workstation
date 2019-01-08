@@ -56,4 +56,4 @@
 - name: Add quick launch icon
   include_role: name="shared/quick_launch"
   vars:
-    binary: sublime_text
+    config: sublime_text.desktop

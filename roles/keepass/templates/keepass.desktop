@@ -1,10 +1,10 @@
 [Desktop Entry]
-Encoding=UTF-8
-Version=0.9.4
+Version=1.0
 Type=Application
-Name=KeePass2
+Name=KeePassXC
+Icon=keepassxc
 Comment=
-Exec=/usr/bin/keepass2
+Exec=keepassxc
 StartupNotify=false
 Terminal=false
 Hidden=false

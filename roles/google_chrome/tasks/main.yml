@@ -7,4 +7,4 @@
 - name: Add quick launch icon
   include_role: name="shared/quick_launch"
   vars:
-    binary: google-chrome
+    config: google-chrome.desktop
