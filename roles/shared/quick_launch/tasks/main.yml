@@ -1,7 +1,7 @@
 - name: Check quick launch icon
   find: 
     paths: "~{{user}}/.config/xfce4/panel/"
-    contains: "^Exec=.*{{config}}"
+    contains: "^Exec=.*{{binary}}"
     recurse: yes
     patterns: "*.desktop"
   register: check_quick_launch_icon

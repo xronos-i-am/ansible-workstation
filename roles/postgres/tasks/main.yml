@@ -68,6 +68,7 @@
   include_role: name="shared/quick_launch"
   vars:
     config: pgadmin3.desktop
+    binary: pgadmin3
 
 #- name: PGAdmin virtualenv
 #  shell: cd /usr/lib/ && virtualenv pgadmin4 && cd pgadmin4 && source bin/activate
