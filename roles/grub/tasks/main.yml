@@ -1,0 +1,11 @@
+# https://askubuntu.com/questions/148095/how-do-i-set-the-grub-timeout-and-the-grub-default-boot-entry
+- name: Decrease timeout
+  lineinfile: 
+    path: /etc/default/grub
+    regexp: "^GRUB_TIMEOUT="
+    line: "GRUB_TIMEOUT=1"
+  register: change_timeout
+
+- name: Update config
+  shell: update-grub
+  when: change_timeout.changed
