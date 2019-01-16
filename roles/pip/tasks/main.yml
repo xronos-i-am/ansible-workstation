@@ -1,2 +1,4 @@
+# sudo python3 -m pip uninstall pip && sudo apt install python3-pip --reinstall
+
 - name: apt-get install python-pip
   apt: name=python-pip state=latest
