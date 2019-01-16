@@ -47,7 +47,7 @@
   lineinfile: 
     path: "~{{user}}/.bashrc"
     regexp: "{{item}}=.*"
-    line: "{{item}}=\"subl -w\""
+    line: "export {{item}}=\"subl -w\""
   with_items:
     - "EDITOR"
     - "VISUAL"
