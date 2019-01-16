@@ -49,5 +49,4 @@
     - httpie
     - mpv
     - smartmontools
-
-
+    - apache2-utils
