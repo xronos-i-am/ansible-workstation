@@ -33,35 +33,35 @@
   tasks:
     - debug: msg="Ubuntu {{ubuntu_version}} {{codename}}"
     - debug: msg="Username {{user}}"
-    - include: tasks/packages.yml
+    # - include: tasks/packages.yml
 
   roles:
-    - { role: ntp }
-    - { role: nginx }
-    - { role: keepass }
-    - { role: java }
-    - { role: redis }
-    - { role: mariadb, root_password: db_root_password }
-    - { role: postgres, root_password: db_root_password }
-    - { role: ruby }
-    - { role: doublecmd }
-    - { role: sublime_text }
-    - { role: google_chrome }
-    - { role: ssh_agent }
-    - { role: keyboard_shortcuts }
-    - { role: wine }
-    - { role: nodejs }
-    - { role: yarn }
-    - { role: memcached }
-    - { role: transmission }
-    - { role: tarantool }
-    - { role: asdf }
-    - { role: elixir }
+    # - { role: ntp }
+    # - { role: nginx }
+    # - { role: keepass }
+    # - { role: java }
+    # - { role: redis }
+    # - { role: mariadb, root_password: db_root_password }
+    # - { role: postgres, root_password: db_root_password }
+    # - { role: ruby }
+    # - { role: doublecmd }
+    # - { role: sublime_text }
+    # - { role: google_chrome }
+    # - { role: ssh_agent }
+    # - { role: keyboard_shortcuts }
+    # - { role: wine }
+    # - { role: nodejs }
+    # - { role: yarn }
+    # - { role: memcached }
+    # - { role: transmission }
+    # - { role: tarantool }
+    # - { role: asdf }
+    # - { role: elixir }
     - { role: yandex_disk }
-    - { role: teamviewer }
-    - { role: docker }
-    - { role: lightdm }
-    - { role: ice_book_reader }
-    - { role: sketchup }
-    - { role: xfce_panel }
-    - { role: grub }
+    # - { role: teamviewer }
+    # - { role: docker }
+    # - { role: lightdm }
+    # - { role: ice_book_reader }
+    # - { role: sketchup }
+    # - { role: xfce_panel }
+    # - { role: grub }

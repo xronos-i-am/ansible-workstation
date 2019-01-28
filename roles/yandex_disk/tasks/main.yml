@@ -10,7 +10,15 @@
 - name: apt-get install yandex-disk
   apt: name=yandex-disk update_cache=yes state=latest
 
-# # https://github.com/slytomcat/yandex-disk-indicator
+- name: config
+  template:
+    src: config.cfg.j2
+    dest: "~{{user}}/.config/yandex-disk/config.cfg"
+    backup: true
+  become: true
+  become_user: "{{user}}"
+
+# https://github.com/slytomcat/yandex-disk-indicator
 - name: Yandex Disk Indicator - add ppa
   apt_repository: repo="ppa:slytomcat/ppa" codename="{{codename}}" filename=yd-tools
 
