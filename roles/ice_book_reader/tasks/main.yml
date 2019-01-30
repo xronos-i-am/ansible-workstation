@@ -1,6 +1,6 @@
 - name: Download
   get_url: 
-    url: http://dev43.ru/ICE Book Reader.zip
+    url: http://dev43.ru/export/ICE Book Reader.zip
     dest: /tmp/ICE Book Reader.zip
   changed_when: false
 
@@ -11,9 +11,25 @@
   become: true
   become_user: "{{user}}"
 
+- name: Extract .desktop
+  template:
+    src: ice_book_reader.desktop.j2
+    dest: /tmp/ice_book_reader.desktop
+  become: true
+  become_user: "{{user}}"    
+
+- name: Add quick launch icon
+  include_role: name="shared/quick_launch"
+  vars:
+    config: /tmp/ice_book_reader.desktop
+    binary: ICE Book Reader
+
 - name: Clean
   file:
-    path: /tmp/ICE Book Reader.zip
+    path: "{{item}}"
     state: absent
   ignore_errors: true
   changed_when: false
+  with_items:
+    - /tmp/ice_book_reader.desktop
+    - /tmp/ICE Book Reader.zip

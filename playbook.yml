@@ -68,3 +68,5 @@
     - { role: sketchup }
     - { role: xfce_panel }
     - { role: grub }
+    - { role: opera }
+    - { role: telegram }
