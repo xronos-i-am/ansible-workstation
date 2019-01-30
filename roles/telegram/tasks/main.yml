@@ -1,0 +1,40 @@
+- name: Download
+  get_url: 
+    url: http://dev43.ru/export/telegram.zip
+    dest: /tmp/telegram.zip
+  changed_when: false
+
+- name: Unarchive
+  unarchive: 
+    src: /tmp/telegram.zip
+    dest: "/usr/lib"
+  become: true
+  become_user: "{{user}}"
+
+- name: Symlink
+  file:
+    src: /usr/lib/telegram/Telegram
+    dest: /usr/bin/telegram
+    state: link
+  become: true
+  become_user: "{{user}}"
+
+- name: Autostart
+  template:
+    src: telegram.desktop.j2
+    dest: "~{{user}}/.config/autostart/telegram.desktop"
+  become: true
+  become_user: "{{user}}"    
+
+- name: Add quick launch icon
+  include_role: name="shared/quick_launch"
+  vars:
+    config: "~{{user}}/.config/autostart/telegram.desktop"
+    binary: telegram
+
+- name: Clean
+  file:
+    path: /tmp/telegram.zip
+    state: absent
+  ignore_errors: true
+  changed_when: false
