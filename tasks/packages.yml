@@ -50,3 +50,5 @@
     - mpv
     - smartmontools
     - apache2-utils
+    - traceroute
+    - tcptraceroute
