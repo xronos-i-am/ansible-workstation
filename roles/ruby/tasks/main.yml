@@ -18,6 +18,8 @@
     - zlib1g-dev
     - libjemalloc-dev
     - chromium-chromedriver
+    - sqlite
+    - libsqlite3-dev
 
 # https://stackoverflow.com/a/30191850/2041969
 - name: Get latest ruby
