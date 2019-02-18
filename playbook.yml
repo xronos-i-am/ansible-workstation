@@ -15,6 +15,10 @@
       command: "sed 's/DISTRIB_RELEASE=//;t;d' /etc/upstream-release/lsb-release"
       register: get_ubuntu_version
       changed_when: False
+    - name: Get kernel version
+      shell: uname -r
+      register: get_kernel_version
+      changed_when: False
     - name: apt-get upgrade
       apt: upgrade=yes
       changed_when: False
@@ -27,6 +31,7 @@
   vars:
     codename: "{{get_ubuntu_release.stdout}}"
     ubuntu_version: "{{get_ubuntu_version.stdout}}"
+    kernel_version: "{{get_kernel_version.stdout}}"
     user: "{{lookup('env', 'USER')}}"
     user_path: "~{{user}}"
     home_path: "{{user_path | expanduser}}"
@@ -70,3 +75,4 @@
     - { role: grub }
     - { role: opera }
     - { role: telegram }
+    - { role: virtualbox }

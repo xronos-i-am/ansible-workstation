@@ -1,0 +1,28 @@
+# https://www.virtualbox.org/wiki/Linux_Downloads
+# https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
+
+- name: Deps
+  apt: 
+    name: ['gcc', 'make', "linux-headers-{{kernel_version}}", 'dkms']
+    state: latest
+
+- name: Keys
+  apt_key: url="{{item}}" state="present"
+  with_items:
+    - https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    - https://www.virtualbox.org/download/oracle_vbox.asc
+
+- name: Repo
+  apt_repository: repo="deb http://download.virtualbox.org/virtualbox/debian {{codename}} contrib" state=present filename="virtualbox"
+
+- name: apt-get install virtualbox
+  apt: 
+    name: 'virtualbox-6.0'
+    update_cache: yes
+    state: latest
+
+- name: Add quick launch icon
+  include_role: name="shared/quick_launch"
+  vars:
+    config: virtualbox.desktop
+    binary: virtualbox
