@@ -52,3 +52,4 @@
     - apache2-utils
     - traceroute
     - tcptraceroute
+    - snapd
