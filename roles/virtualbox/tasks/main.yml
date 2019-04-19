@@ -13,7 +13,7 @@
     - https://www.virtualbox.org/download/oracle_vbox.asc
 
 - name: Repo
-  apt_repository: repo="deb http://download.virtualbox.org/virtualbox/debian {{codename}} contrib" state=present filename="virtualbox"
+  apt_repository: repo="deb [arch=amd64] http://download.virtualbox.org/virtualbox/debian {{codename}} contrib" state=present filename="virtualbox"
 
 - name: apt-get install virtualbox
   apt: 
