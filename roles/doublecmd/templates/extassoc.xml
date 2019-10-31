@@ -4,7 +4,7 @@
     <FileType>
       <Name>sublime</Name>
       <IconFile>/opt/sublime_text/Icon/32x32/sublime-text.png</IconFile>
-      <ExtensionList>rb|ex|exs|yml|js|css|haml|slim|erb|html|rake|thor|json|xml|coffee</ExtensionList>
+      <ExtensionList>rb|ex|exs|yml|js|css|haml|slim|erb|html|rake|thor|json|xml|coffee|ts</ExtensionList>
       <Actions>
         <Action>
           <Name>Edit</Name>
