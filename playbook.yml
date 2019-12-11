@@ -63,7 +63,7 @@
     - { role: yarn }
     - { role: memcached }
     - { role: transmission }
-    - { role: tarantool }
+    # - { role: tarantool }
     - { role: asdf }
     - { role: elixir }
     - { role: yandex_disk }
