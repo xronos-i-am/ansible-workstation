@@ -4,7 +4,7 @@
 
 - name: Symlink
   file:
-    src: /snap/telegram-desktop/current/bin/Telegram
+    src: /snap/bin/telegram-desktop
     dest: /usr/bin/telegram
     state: link
 
