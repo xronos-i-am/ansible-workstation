@@ -2,12 +2,6 @@
   shell: snap install telegram-desktop
   changed_when: false
 
-- name: Symlink
-  file:
-    src: /snap/bin/telegram-desktop
-    dest: /usr/bin/telegram
-    state: link
-
 - name: Autostart
   template:
     src: telegram.desktop.j2
