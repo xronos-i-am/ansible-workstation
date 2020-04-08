@@ -77,3 +77,4 @@
     - { role: opera }
     - { role: telegram }
     - { role: virtualbox }
+    - { role: zoom }
