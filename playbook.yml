@@ -19,12 +19,12 @@
       shell: uname -r
       register: get_kernel_version
       changed_when: False
-    - name: apt-get upgrade
-      apt: upgrade=yes
-      changed_when: False
-    - name: apt-get update
-      apt: update_cache=yes
-      changed_when: False
+    # - name: apt-get upgrade
+    #   apt: upgrade=yes
+    #   changed_when: False
+    # - name: apt-get update
+    #   apt: update_cache=yes
+    #   changed_when: False
     - locale_gen: name=ru_RU.UTF-8 state=present
     - locale_gen: name=en_US.UTF-8 state=present
 
@@ -63,7 +63,6 @@
     - { role: yarn }
     - { role: memcached }
     - { role: transmission }
-    # - { role: tarantool }
     - { role: asdf }
     - { role: elixir }
     - { role: yandex_disk }
@@ -78,3 +77,4 @@
     - { role: telegram }
     - { role: virtualbox }
     - { role: zoom }
+    - { role: davfs2 }
