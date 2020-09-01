@@ -54,3 +54,5 @@
     - traceroute
     - tcptraceroute
     - snapd
+    - bluez 
+    - blueman
