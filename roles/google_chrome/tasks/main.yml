@@ -9,3 +9,14 @@
   vars:
     config: google-chrome.desktop
     binary: google-chrome
+
+- name: Set as default for http
+  lineinfile: 
+    path: "~{{user}}/.local/share/applications/mimeapps.list"
+    regexp: "x-scheme-handler/http="
+    line: "x-scheme-handler/http=google-chrome.desktop"
+- name: Set as default for https
+  lineinfile: 
+    path: "~{{user}}/.local/share/applications/mimeapps.list"
+    regexp: "x-scheme-handler/https="
+    line: "x-scheme-handler/https=google-chrome.desktop"
