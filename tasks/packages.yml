@@ -56,3 +56,5 @@
     - snapd
     - bluez 
     - blueman
+    - cifs-utils
+    - smbclient
