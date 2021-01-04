@@ -1,15 +1,18 @@
 - name: Install
-  apt: pkg="{{ item }}" state=latest
-  with_items:
-    - postgresql-10
-    - postgresql-client-10
-    - postgresql-11
-    - postgresql-client-11
-    - libpq-dev
-    #- virtualenv
+  apt: 
+    pkg: ['postgresql-10', 'postgresql-client-10', 'postgresql-13', 'postgresql-client-13', 'libpq-dev']
+    state: latest
   register: postgres_installed
   notify:
     - restart postgres
+
+- name: ask password
+  pause:
+    prompt: "Postgres root password"
+    echo: no
+  register: postgres_ask_password
+  when: postgres_installed.changed
+  changed_when: false
 
 - name: pg_hba.conf#local
   replace:
@@ -18,7 +21,7 @@
     replace: "local all all md5"
   with_items:
     - /etc/postgresql/10/main/pg_hba.conf
-    - /etc/postgresql/11/main/pg_hba.conf
+    - /etc/postgresql/13/main/pg_hba.conf
   when: postgres_installed
   ignore_errors: true
 
@@ -29,7 +32,7 @@
     replace: "postgres all all trust"
   with_items:
     - /etc/postgresql/10/main/pg_hba.conf
-    - /etc/postgresql/11/main/pg_hba.conf
+    - /etc/postgresql/13/main/pg_hba.conf
   when: postgres_installed
   ignore_errors: true
 
@@ -43,14 +46,14 @@
       path: /etc/postgresql/10/main/pg_hba.conf
       port: 5432
     - item:
-      path: /etc/postgresql/11/main/pg_hba.conf
+      path: /etc/postgresql/13/main/pg_hba.conf
       port: 5433
   when: postgres_installed
   ignore_errors: true
 
 - name: Set postgres user password
   become_user: postgres
-  command: psql -d postgres -p {{item}} -c "ALTER USER postgres with password '{{ root_password }}';"
+  command: psql -d postgres -p {{item}} -c "ALTER USER postgres with password '{{ postgres_ask_password.user_input }}';"
   with_items:
     - 5432
     - 5433

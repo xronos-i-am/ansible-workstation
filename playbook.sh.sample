@@ -1,3 +1,4 @@
-USER=<linux_user> DB_ROOT_PASSWORD=<local_root_password> ansible-playbook --ask-become-pass ./playbook.yml
+# ansible-playbook --ask-become-pass --extra-vars "user=" ./playbook.yml
+ansible-playbook --ask-become-pass ./playbook.yml
 winecfg
 winetricks

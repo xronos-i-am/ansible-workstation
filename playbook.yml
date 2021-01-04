@@ -32,10 +32,14 @@
     codename: "{{get_ubuntu_release.stdout}}"
     ubuntu_version: "{{get_ubuntu_version.stdout}}"
     kernel_version: "{{get_kernel_version.stdout}}"
-    user: "{{lookup('env', 'USER')}}"
     user_path: "~{{user}}"
     home_path: "{{user_path | expanduser}}"
     db_root_password: "{{lookup('env', 'DB_ROOT_PASSWORD')}}"
+
+  vars_prompt:
+    - name: user
+      prompt: whoami?
+      private: no
 
   tasks:
     - debug: msg="Ubuntu {{ubuntu_version}} {{codename}}"
@@ -49,8 +53,8 @@
     - { role: keepass }
     - { role: java }
     - { role: redis }
-    - { role: mariadb, root_password: db_root_password }
-    - { role: postgres, root_password: db_root_password }
+    - { role: mariadb }
+    - { role: postgres }
     - { role: ruby }
     - { role: doublecmd }
     - { role: sublime_text }

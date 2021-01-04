@@ -9,17 +9,14 @@
   apt_repository: repo="deb-src http://mirror.truenetwork.ru/mariadb/repo/10.3/ubuntu {{codename}} main" filename="mariadb-10"
 
 - name: Install packages
-  apt: pkg={{ item }} state=latest update_cache=yes
-  with_items:
-    - mariadb-client
-    - mariadb-server
-    - libmariadb-dev
-    - libmariadb-dev-compat
-    - libmariadbclient18
+  apt: 
+    pkg: ['mariadb-client', 'mariadb-server', 'libmariadb-dev', 'libmariadb-dev-compat', 'libmariadbclient18'] 
+    state: latest 
+    update_cache: yes
   register: mysql_installed
 
-- name: Install mysql-python
-  pip: name=mysql-python state=latest
+# - name: Install mysql-python
+#   pip: name=mysql-python state=latest
 
 - name: Enable socket login
   ini_file: 
@@ -34,8 +31,16 @@
   systemd: name=mariadb state=restarted
   when: socket_login_enabled.changed
 
+- name: ask password
+  pause:
+    prompt: "MariaDB root password"
+    echo: no
+  register: mariadb_ask_password
+  when: mysql_installed.changed
+  changed_when: false
+
 - name: Set root Password
-  mysql_user: name=root host={{ item }} password={{ root_password }} state=present
+  mysql_user: name=root host={{ item }} password={{ mariadb_ask_password.user_input }} state=present
   with_items:
     - localhost
     - 127.0.0.1
@@ -43,14 +48,14 @@
   when: mysql_installed.changed
 
 - name: Reload privilege tables
-  command: 'mysql -ne "{{ item }}" --password={{root_password}}'
+  command: 'mysql -ne "{{ item }}" --password={{ mariadb_ask_password.user_input }}'
   with_items:
     - FLUSH PRIVILEGES
   changed_when: False
   when: mysql_installed.changed
 
 - name: Setup roles
-  command: 'mysql -ne "{{ item }}" --password={{root_password}}'
+  command: 'mysql -ne "{{ item }}" --password={{ mariadb_ask_password.user_input }}'
   with_items:
     - DELETE FROM mysql.user WHERE User=''
     - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')
@@ -63,7 +68,7 @@
 #  changed_when: False
 
 - name: Remove test database and access to it
-  command: 'mysql -ne "{{ item }}" --password={{root_password}}'
+  command: 'mysql -ne "{{ item }}" --password={{ mariadb_ask_password.user_input }}'
   with_items:
     - DROP DATABASE test
     - DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'
@@ -72,7 +77,7 @@
   when: mysql_installed.changed
 
 - name: Reload privilege tables
-  command: 'mysql -ne "{{ item }}" --password={{root_password}}'
+  command: 'mysql -ne "{{ item }}" --password={{ mariadb_ask_password.user_input }}'
   with_items:
     - FLUSH PRIVILEGES
   changed_when: False
