@@ -1,3 +1,3 @@
-USER=<linux_user> DB_ROOT_PASSWORD=<local_root_password> EMAIL=<git_config_email> NAME=<git_config_name> ansible-playbook --ask-become-pass ./playbook.yml
+USER=<linux_user> DB_ROOT_PASSWORD=<local_root_password> ansible-playbook --ask-become-pass ./playbook.yml
 winecfg
 winetricks
