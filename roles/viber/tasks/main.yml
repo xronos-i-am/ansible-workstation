@@ -1,0 +1,15 @@
+- name: install
+  apt: deb=https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb
+
+- name: viber.desktop
+  template:
+    src: viber.desktop.j2
+    dest: "/tmp/viber.desktop"
+  become: true
+  become_user: "{{user}}"    
+
+- name: Add quick launch icon
+  include_role: name="shared/quick_launch"
+  vars:
+    config: "tmp/viber.desktop"
+    binary: Viber

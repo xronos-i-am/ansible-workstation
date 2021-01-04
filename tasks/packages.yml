@@ -58,3 +58,4 @@
     - blueman
     - cifs-utils
     - smbclient
+    - gdebi-core
