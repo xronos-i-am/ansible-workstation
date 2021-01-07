@@ -1,2 +1,0 @@
-- name: apt-get install keychain
-  apt: name=keychain state=latest

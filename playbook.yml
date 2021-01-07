@@ -60,7 +60,6 @@
     - { role: sublime_text }
     - { role: google_chrome }
     - { role: tor_browser }
-    - { role: ssh_agent }
     - { role: keyboard_shortcuts }
     - { role: wine }
     - { role: nodejs }
@@ -69,7 +68,6 @@
     - { role: transmission }
     - { role: asdf }
     - { role: elixir }
-    - { role: yandex_disk }
     - { role: teamviewer }
     - { role: docker }
     - { role: lightdm }
@@ -81,5 +79,4 @@
     - { role: telegram }
     - { role: virtualbox }
     - { role: zoom }
-    - { role: davfs2 }
     - { role: viber }
