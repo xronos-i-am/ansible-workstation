@@ -1,16 +1,27 @@
 # https://github.com/jdauphant/ansible-role-packaging/blob/master/tasks/Debian.yml
+# https://wiki.winehq.org/Ubuntu
 
-- name: Deps
-  apt: name="cabextract" state="latest"
+# https://askubuntu.com/a/1145491/106009
+- name: wine deps
+  apt: 
+    deb: "{{ item }}"
+  with_items:
+    - https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/i386/libfaudio0_19.07-0~bionic_i386.deb
+    - https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/amd64/libfaudio0_19.07-0~bionic_amd64.deb
 
 - name: Key
-  apt_key: url=https://dl.winehq.org/wine-builds/Release.key
+  apt_key: url=https://dl.winehq.org/wine-builds/winehq.key
 
 - name: Repo
   apt_repository: repo='deb https://dl.winehq.org/wine-builds/ubuntu/ {{codename}} main' filename="wine"
 
 - name: apt-get install winehq-stable
   apt: name=winehq-stable state=latest install_recommends=yes update_cache=yes
+
+- name: winetrics deps
+  apt: 
+    pkg: ["cabextract"] 
+    state: "latest"
 
 - name: winetrics
   get_url:

@@ -1,5 +1,5 @@
 - name: Key
-  apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg state=latest
+  apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg state=present
 
 - name: Repo
   apt_repository: repo="deb https://dl.yarnpkg.com/debian/ stable main" state=present filename="yarn"

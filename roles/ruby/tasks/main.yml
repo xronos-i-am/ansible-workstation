@@ -1,25 +1,12 @@
 - name: Remove old packages
-  apt: name={{ item }} state=absent
-  with_items:
-   - ruby
-   - ruby1.8
-   - ruby1.9.1
+  apt: 
+    name: ["ruby", "ruby1.8", "ruby1.9.1"]
+    state: absent
 
 - name: Install packages
-  apt: name={{ item }} state=latest
-  with_items:
-    - build-essential
-    - autoconf
-    - libssl-dev
-    - libyaml-dev
-    - libreadline7
-    - libreadline-dev
-    - zlib1g
-    - zlib1g-dev
-    - libjemalloc-dev
-    - chromium-chromedriver
-    - sqlite
-    - libsqlite3-dev
+  apt: 
+    name: ["build-essential", "autoconf", "libssl-dev", "libyaml-dev", "libreadline7", "libreadline-dev", "zlib1g", "zlib1g-dev", "libjemalloc-dev", "chromium-chromedriver", "sqlite", "libsqlite3-dev"]
+    state: latest
 
 # https://stackoverflow.com/a/30191850/2041969
 - name: Get latest ruby
@@ -47,7 +34,7 @@
     executable: "/bin/bash"
   ignore_errors: true
   with_items:
-    - 'CONFIGURE_OPTS="--disable-install-rdoc --disable-install-doc --with-jemalloc --jit --enable-shared=true" rbenv install {{get_latest_ruby.stdout}}'
+    - 'CONFIGURE_OPTS="--disable-install-rdoc --disable-install-doc --with-jemalloc --enable-shared=true" rbenv install {{get_latest_ruby.stdout}}'
     - "rbenv global {{get_latest_ruby.stdout}}"
     - "gem install bundler"
   when: rbenv_ruby_check.rc == 1
