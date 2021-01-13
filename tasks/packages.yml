@@ -10,6 +10,6 @@
 
 - name: Install packages
   apt: 
-    pkg: ['htop', 'iotop', 'mc', 'apt-transport-https', 'gitg', 'rsync', 'vim', 'lsb-core', 'build-essential', 'libssl-dev', 'openssl', 'curl', 'imagemagick', 'libmagic-dev', 'nautilus-dropbox', 'p7zip-full', 'httpie', 'mpv', 'smartmontools', 'apache2-utils', 'traceroute', 'tcptraceroute', 'snapd', 'bluez', 'blueman', 'cifs-utils', 'smbclient', 'gdebi-core']
+    pkg: ['htop', 'iotop', 'mc', 'apt-transport-https', 'gitg', 'rsync', 'vim', 'lsb-core', 'build-essential', 'libssl-dev', 'openssl', 'curl', 'imagemagick', 'libmagic-dev', 'p7zip-full', 'httpie', 'mpv', 'smartmontools', 'apache2-utils', 'traceroute', 'tcptraceroute', 'snapd', 'bluez', 'blueman', 'cifs-utils', 'smbclient', 'gdebi-core']
     state: latest
   

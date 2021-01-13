@@ -3,7 +3,7 @@
 
 - name: viber.desktop
   template:
-    src: viber.desktop.j2
+    src: viber.desktop
     dest: "/tmp/viber.desktop"
   become: true
   become_user: "{{user}}"    

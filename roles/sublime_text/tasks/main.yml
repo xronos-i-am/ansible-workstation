@@ -6,42 +6,6 @@
 
 - name: apt-get install sublime-text
   apt: update_cache=yes name=sublime-text
-  register: sublime_text_installed
-
-- name: Restore packages
-  copy:
-    dest: "~{{user}}/.config/sublime-text-3/Installed Packages"
-    src: "{{item}}"
-    owner: "{{user}}"
-    group: "{{user}}"
-  with_fileglob:
-    - "../templates/Installed Packages/*"
-  when: sublime_text_installed.changed
-
-- name: Restore settings
-  copy:
-    dest: "~{{user}}/.config/sublime-text-3/Packages/User"
-    src: "{{item}}"
-    owner: "{{user}}"
-    group: "{{user}}"
-  with_fileglob:
-    - "../templates/User/*"
-  when: sublime_text_installed.changed
-
-- name: Install package control
-  get_url:
-    url: "{{item.url}}"
-    dest: "~{{user}}/.config/sublime-text-3/Installed Packages/{{item.name}}"
-    owner: "{{user}}"
-    group: "{{user}}"
-  with_items:
-    - item:
-      url: https://packagecontrol.io/Package%20Control.sublime-package
-      name: Package Control.sublime-package
-  when: sublime_text_installed.changed
-#    - item:
-#      url: https://raw.githubusercontent.com/jayzelenkov/sublime-railscasts-extended/master/Railscasts%20Extended.tmTheme
-#      name: Railscasts Extended.tmTheme
 
 - name: Add default editor
   lineinfile: 

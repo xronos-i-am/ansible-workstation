@@ -1,33 +1,10 @@
-# - name: Repo
-#   apt_repository: repo="ppa:jtaylor/keepass" state=present filename="keepass-2" codename={{codename}}
-
-# - name: apt-get install keepass2
-#   apt: name=keepass2 update_cache=yes state=latest
-
-# - name: download keepasshttp
-#   get_url: 
-#     url: https://raw.github.com/pfn/keepasshttp/master/KeePassHttp.plgx
-#     dest: /usr/lib/keepass2/Plugins/KeePassHttp.plgx
-
-# - name: set autostart
-#   copy:
-#     dest: "~{{user}}/.config/autostart/keepass.desktop"
-#     src: "../templates/keepass.desktop"
-#     owner: "{{user}}"
-#     group: "{{user}}"
-
-# - name: Add quick launch icon
-#   include_role: name="shared/quick_launch"
-#   vars:
-#     binary: keepass2
+# https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk?utm_source=chrome-ntp-icon
 
 - name: Repo
   apt_repository: repo="ppa:phoerious/keepassxc" state=present filename="keepassxc" codename={{codename}}
 
 - name: apt-get install keepassxc
   apt: name=keepassxc update_cache=yes state=latest
-
-# https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk?utm_source=chrome-ntp-icon
 
 - name: set autostart
   copy:

@@ -10,8 +10,3 @@
   apt: name=nginx update_cache=yes state=latest
   notify:
     - restart nginx
-
-#- name: service nginx start
-#  service:
-#    name: nginx
-#    state: started

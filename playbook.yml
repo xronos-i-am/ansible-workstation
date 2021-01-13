@@ -71,7 +71,6 @@
     - { role: teamviewer }
     - { role: docker }
     - { role: lightdm }
-    - { role: ice_book_reader }
     - { role: sketchup }
     - { role: xfce_panel }
     - { role: grub }

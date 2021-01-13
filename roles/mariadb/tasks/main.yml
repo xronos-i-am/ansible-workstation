@@ -15,9 +15,6 @@
     update_cache: yes
   register: mysql_installed
 
-# - name: Install mysql-python
-#   pip: name=mysql-python state=latest
-
 - name: Enable socket login
   ini_file: 
     path: "/etc/mysql/mariadb.conf.d/50-server.cnf"

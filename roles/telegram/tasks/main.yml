@@ -4,7 +4,7 @@
 
 - name: Autostart
   template:
-    src: telegram.desktop.j2
+    src: telegram.desktop
     dest: "~{{user}}/.config/autostart/telegram.desktop"
   become: true
   become_user: "{{user}}"    
