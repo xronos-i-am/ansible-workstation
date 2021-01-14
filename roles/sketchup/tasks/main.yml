@@ -1,5 +1,0 @@
-- name: Registry
-  shell: "wine regedit ../templates/sketchup.reg"
-  become: true
-  become_user: "{{user}}"
-  changed_when: false
