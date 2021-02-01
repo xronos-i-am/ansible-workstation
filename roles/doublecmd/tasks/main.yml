@@ -1,3 +1,8 @@
+- name: Deps
+  apt:
+    name: ["gvfs", "gvfs-backends", "gvfs-fuse"]
+    state: "latest"
+
 - name: Key
   apt_key: url="http://download.opensuse.org/repositories/home:Alexx2000/xUbuntu_{{ubuntu_version}}/Release.key"
 
