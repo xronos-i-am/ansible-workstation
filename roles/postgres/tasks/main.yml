@@ -1,8 +1,18 @@
-- name: Install
-  apt: 
-    pkg: ['postgresql-10', 'postgresql-client-10', 'postgresql-13', 'postgresql-client-13', 'libpq-dev']
-    state: latest
-  register: postgres_installed
+- name: apt-key
+  apt_key: url="https://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc"
+
+- name: deb
+  apt_repository:
+    repo: "deb https://apt.postgresql.org/pub/repos/apt/ {{ ansible_lsb.codename }}-pgdg main"
+
+- name: Install required postgres packages
+  apt:
+    name:
+      - postgresql-13
+      - postgresql-contrib-13
+      - postgresql-13-postgis-3
+      - libpq-dev
+      - python3-psycopg2
   notify:
     - restart postgres
 
@@ -20,7 +30,6 @@
     regexp: '^local\s+all\s+all\s+peer$'
     replace: "local all all md5"
   with_items:
-    - /etc/postgresql/10/main/pg_hba.conf
     - /etc/postgresql/13/main/pg_hba.conf
   when: postgres_installed
   ignore_errors: true
@@ -31,38 +40,16 @@
     regexp: '^postgres\s+all\s+all\s+(peer|ident)$'
     replace: "postgres all all trust"
   with_items:
-    - /etc/postgresql/10/main/pg_hba.conf
     - /etc/postgresql/13/main/pg_hba.conf
-  when: postgres_installed
-  ignore_errors: true
-
-- name: postgresql.conf#port
-  replace:
-    path: "{{item.path}}"
-    regexp: '^port\s\d+$'
-    replace: "port {{item.port}}"
-  with_items:
-    - item:
-      path: /etc/postgresql/10/main/pg_hba.conf
-      port: 5432
-    - item:
-      path: /etc/postgresql/13/main/pg_hba.conf
-      port: 5433
   when: postgres_installed
   ignore_errors: true
 
 - name: Set postgres user password
   become_user: postgres
-  command: psql -d postgres -p {{item}} -c "ALTER USER postgres with password '{{ postgres_ask_password.user_input }}';"
+  command: psql -d postgres -p 5435 -c "ALTER USER postgres with password '{{ postgres_ask_password.user_input }}';"
   with_items:
-    - 5432
-    - 5433
+    - 5435
   when: postgres_installed.changed
-
-- name: PGAdmin key
-  apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
-- name: PGAdmin repo
-  apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ {{codename}}-pgdg main" filename="pgadmin"
 
 - name: PGAdmin install
   apt: name=pgadmin3 update_cache=yes state=latest
