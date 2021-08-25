@@ -1,0 +1,5 @@
+- name: Repo
+  apt_repository: repo="ppa:easymodo/qimgv" state=present filename="qimgv"
+
+- name: apt-get install qimgv
+  apt: name=qimgv update_cache=yes install_recommends=no state=latest
