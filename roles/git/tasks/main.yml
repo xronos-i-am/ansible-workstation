@@ -1,3 +1,9 @@
+- name: Repo
+  apt_repository: 
+    repo: ppa:git-core/ppa
+    codename: "{{codename}}"
+    filename: git
+
 - name: ask email
   pause:
     prompt: "GIT email"
