@@ -3,7 +3,7 @@
 
 - name: deb
   apt_repository:
-    repo: "deb https://apt.postgresql.org/pub/repos/apt/ {{ ansible_lsb.codename }}-pgdg main"
+    repo: "deb https://apt.postgresql.org/pub/repos/apt {{codename}}-pgdg main"
 
 - name: Install required postgres packages
   apt:
@@ -46,19 +46,19 @@
 
 - name: Set postgres user password
   become_user: postgres
-  command: psql -d postgres -p 5435 -c "ALTER USER postgres with password '{{ postgres_ask_password.user_input }}';"
+  command: psql -d postgres -p 5432 -c "ALTER USER postgres with password '{{ postgres_ask_password.user_input }}';"
   with_items:
-    - 5435
+    - 5432
   when: postgres_installed.changed
 
-- name: PGAdmin install
-  apt: name=pgadmin3 update_cache=yes state=latest
-
-- name: Add quick launch icon
-  include_role: name="shared/quick_launch"
-  vars:
-    config: pgadmin3.desktop
-    binary: pgadmin3
+#- name: PGAdmin install
+#  apt: name=pgadmin3 update_cache=yes state=latest
+#
+#- name: Add quick launch icon
+#  include_role: name="shared/quick_launch"
+#  vars:
+#    config: pgadmin3.desktop
+#    binary: pgadmin3
 
 #- name: PGAdmin virtualenv
 #  shell: cd /usr/lib/ && virtualenv pgadmin4 && cd pgadmin4 && source bin/activate
