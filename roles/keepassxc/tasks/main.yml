@@ -1,0 +1,24 @@
+- name: Repo
+  deb822_repository:
+    name: keepassxc
+    types: [deb]
+    uris: "https://ppa.launchpadcontent.net/phoerious/keepassxc/ubuntu"
+    signed_by: "https://keys.openpgp.org/vks/v1/by-fingerprint/BF5A669F2272CF4324C1FDA8CFB4C2166397D0D2"
+    architectures: [amd64]
+    suites: ["{{codename}}"]
+    components: [main]
+    enabled: yes
+
+- name: Install
+  apt: name=keepassxc
+
+# - name:
+#   include_role: name="shared/autostart"
+#   vars:
+#     config: keepassxc.desktop
+
+- name: 
+  include_role: name="shared/quick_launch"
+  vars:
+    config: /usr/share/applications/org.keepassxc.KeePassXC.desktop
+    binary: keepassxc

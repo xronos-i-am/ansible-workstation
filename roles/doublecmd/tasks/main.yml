@@ -1,19 +1,22 @@
 - name: Deps
   apt:
     name: ["gvfs", "gvfs-backends", "gvfs-fuse"]
-    state: "latest"
-
-- name: Key
-  apt_key: url="http://download.opensuse.org/repositories/home:Alexx2000/xUbuntu_{{ubuntu_version}}/Release.key"
-
+  
 - name: Repo
-  apt_repository: repo="deb http://download.opensuse.org/repositories/home:/Alexx2000/xUbuntu_{{ubuntu_version}}/ /" filename=doublecmd
+  deb822_repository:
+    name: "doublecmd"
+    types: [deb]
+    uris: "https://download.docker.com/linux/ubuntu"
+    signed_by: "https://download.opensuse.org/repositories/home:/Alexx2000/xUbuntu_{{ubuntu_version}}/Release.key"
+    architectures: [amd64]
+    suites: ["/"]
+    components: []
 
-- name: apt-get install doublecmd-gtk
-  apt: name=doublecmd-gtk state=latest update_cache=true
+- name: Install
+  apt: name=doublecmd-gtk
 
-- name: Add quick launch icon
+- name: 
   include_role: name="shared/quick_launch"
   vars:
-    config: doublecmd.desktop
+    config: /usr/share/applications/doublecmd.desktop
     binary: doublecmd

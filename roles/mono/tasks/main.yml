@@ -1,10 +1,13 @@
-- name: Key
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-
 - name: Repo
-  apt_repository: repo='deb https://download.mono-project.com/repo/ubuntu stable-{{codename}} main' state=present filename="mono"
+  deb822_repository:
+    name: mono
+    types: [deb]
+    uris: "https://download.mono-project.com/repo/ubuntu"
+    signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
+    architectures: [amd64]
+    suites: ["stable-{{codename}}"]
+    components: [main]
+    enabled: yes
 
 - name: Install
-  apt: name="mono-complete" update_cache=yes state=latest
+  apt: name=mono-complete

@@ -20,9 +20,3 @@
     name: 'virtualbox-6.0'
     update_cache: yes
     state: latest
-
-- name: Add quick launch icon
-  include_role: name="shared/quick_launch"
-  vars:
-    config: virtualbox.desktop
-    binary: virtualbox

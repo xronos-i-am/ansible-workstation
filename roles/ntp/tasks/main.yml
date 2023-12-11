@@ -1,5 +1,9 @@
 - name: Install
-  apt: name=ntp state=latest
+  apt: name=ntp
+
+- name: Set timezone
+  community.general.timezone:
+    name: Europe/Moscow
 
 - name: Setup servers
   replace: 
@@ -14,3 +18,4 @@
     - {regexp: '^pool (3).ubuntu.pool.ntp.org (.*)'}
   notify: 
     - restart ntp
+

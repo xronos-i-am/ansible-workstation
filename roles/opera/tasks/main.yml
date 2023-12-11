@@ -1,8 +1,12 @@
-- name: Key
-  apt_key: url=https://deb.opera.com/archive.key state=present
-
 - name: Repo
-  apt_repository: repo="deb https://deb.opera.com/opera-stable/ stable non-free" state=present filename="opera"
+  deb822_repository:
+    name: opera
+    types: [deb]
+    uris: "https://deb.opera.com/opera-stable/"
+    signed_by: "https://deb.opera.com/archive.key"
+    architectures: [amd64]
+    suites: [stable]
+    components: [non-free]
 
-- name: apt-get install opera-stable
-  apt: name=opera update_cache=yes install_recommends=no state=latest
+- name: Install
+  apt: name=opera-stable

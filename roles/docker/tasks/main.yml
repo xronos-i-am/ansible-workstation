@@ -1,14 +1,17 @@
 - name: Deps
   apt:
-    name: ["apt-transport-https", "ca-certificates", "curl", "software-properties-common"]
-    state: present
-    update_cache: yes
-
-- name: Key
-  apt_key: url="https://download.docker.com/linux/ubuntu/gpg"
+    name: ["ca-certificates", "curl", "gnupg"]
 
 - name: Repo
-  apt_repository: repo="deb [arch=amd64] https://download.docker.com/linux/ubuntu {{codename}} stable" filename="docker"
+  deb822_repository:
+    name: "docker"
+    types: [deb]
+    uris: "https://download.docker.com/linux/ubuntu"
+    signed_by: "https://download.docker.com/linux/ubuntu/gpg"
+    architectures: [amd64]
+    suites: [nodistro]
+    components: [main]
 
-- name: apt-get install docker-ce
-  apt: name="docker-ce" state=latest update_cache=yes
+- name: Install
+  apt:
+    name: ["docker-ce", "docker-ce-cli", "containerd.io", "docker-buildx-plugin", "docker-compose-plugin"]

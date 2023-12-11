@@ -1,16 +1,14 @@
-- name: snap install
-  shell: snap install telegram-desktop
-  changed_when: false
+- name: install
+  apt: 
+    name: telegram-desktop
 
-- name: Autostart
-  template:
-    src: telegram.desktop
-    dest: "~{{user}}/.config/autostart/telegram.desktop"
-  become: true
-  become_user: "{{user}}"    
+# - name: 
+#   include_role: name="shared/autostart"
+#   vars:
+#     config: telegram.desktop
 
-- name: Add quick launch icon
+- name: 
   include_role: name="shared/quick_launch"
   vars:
-    config: "~{{user}}/.config/autostart/telegram.desktop"
+    config: /usr/share/applications/telegramdesktop.desktop
     binary: telegram

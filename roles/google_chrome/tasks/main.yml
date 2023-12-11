@@ -1,22 +1,18 @@
 - name: Repo
-  apt_repository: repo="deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" state=present filename="google-chrome"
+  deb822_repository:
+    name: "google-chrome"
+    types: [deb]
+    uris: "https://dl.google.com/linux/chrome/deb/"
+    signed_by: "https://dl.google.com/linux/linux_signing_key.pub"
+    architectures: [amd64]
+    suites: [stable]
+    components: [main]
 
-- name: apt-get install google-chrome-stable
-  apt: update_cache=yes name="google-chrome-stable" state=latest
+- name: Install
+  apt: name=google-chrome-stable
 
-- name: Add quick launch icon
+- name: 
   include_role: name="shared/quick_launch"
   vars:
-    config: google-chrome.desktop
+    config: "/usr/share/applications/google-chrome.desktop"
     binary: google-chrome
-
-- name: Set as default for http
-  lineinfile: 
-    path: "~{{user}}/.local/share/applications/mimeapps.list"
-    regexp: "x-scheme-handler/http="
-    line: "x-scheme-handler/http=google-chrome.desktop"
-- name: Set as default for https
-  lineinfile: 
-    path: "~{{user}}/.local/share/applications/mimeapps.list"
-    regexp: "x-scheme-handler/https="
-    line: "x-scheme-handler/https=google-chrome.desktop"

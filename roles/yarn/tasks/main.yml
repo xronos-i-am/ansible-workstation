@@ -1,8 +1,10 @@
-- name: Key
-  apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg state=present
-
-- name: Repo
-  apt_repository: repo="deb https://dl.yarnpkg.com/debian/ stable main" state=present filename="yarn"
-
-- name: apt-get install yarn
-  apt: name=yarn update_cache=yes install_recommends=no state=latest
+- name: apt intsall yarn
+  deb822_repository:
+    name: yarn
+    types: [deb]
+    uris: "https://dl.yarnpkg.com/debian/"
+    signed_by: "https://dl.yarnpkg.com/debian/pubkey.gpg"
+    architectures: [amd64]
+    suites: [stable]
+    components: [main]
+    enabled: yes

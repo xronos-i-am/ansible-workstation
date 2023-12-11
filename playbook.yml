@@ -19,12 +19,12 @@
       shell: uname -r
       register: get_kernel_version
       changed_when: False
-    # - name: apt-get upgrade
-    #   apt: upgrade=yes
-    #   changed_when: False
-    # - name: apt-get update
-    #   apt: update_cache=yes
-    #   changed_when: False
+    #- name: apt-get upgrade
+    #  apt: upgrade=yes
+    #  changed_when: False
+    #- name: apt-get update
+    #  apt: update_cache=yes
+    #  changed_when: False
     - locale_gen: name=ru_RU.UTF-8 state=present
     - locale_gen: name=en_US.UTF-8 state=present
 
@@ -48,35 +48,33 @@
     - include: tasks/packages.yml
 
   roles:
-#    - { role: chrome_driver }
-#    - { role: ntp }
-#    - { role: nginx }
-#    - { role: keepass }
-#    - { role: java }
-#    - { role: redis }
-#    - { role: mariadb }
-    - { role: postgres }
-#    - { role: ruby }
-#    - { role: doublecmd }
-#    - { role: sublime_text }
-#    - { role: google_chrome }
-#    - { role: tor_browser }
-#    - { role: keyboard_shortcuts }
-#    - { role: wine }
-#    - { role: nodejs }
-#    - { role: yarn }
-#    - { role: memcached }
-#    - { role: transmission }
-#    - { role: asdf }
-#    - { role: elixir }
-#    - { role: teamviewer }
-#    - { role: docker }
+    # - { role: asdf }
+    # - { role: chrome_driver }
+    # - { role: docker }
+    # - { role: doublecmd }
+    # - { role: git }
+    # - { role: google_chrome }
+    # - { role: grub }
+#    - { role: i386 }
+    # - { role: keepassxc }
+    # - { role: keyboard_shortcuts }
 #    - { role: lightdm }
-#    - { role: xfce_panel }
-#    - { role: grub }
-#    - { role: opera }
-#    - { role: telegram }
+    # - { role: mono }
+    # - { role: nginx }
+#    - { role: nodejs }
+    # - { role: ntp }
+    # - { role: opera }
+    # - { role: postgres }
+    # - { role: python }
+    # - { role: rbenv }
+#    - { role: redis }
+    # - { role: ruby }
+    # - { role: sublime_text }
+    # - { role: telegram }
+    # - { role: tor_browser }
+    # - { role: transmission }
 #    - { role: virtualbox }
+#    - { role: wine }
+    # - { role: xfce_panel }
+    # - { role: yarn }
 #    - { role: zoom }
-#    - { role: viber }
-#    - { role: qimgv }

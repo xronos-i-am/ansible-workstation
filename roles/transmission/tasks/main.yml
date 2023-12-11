@@ -1,5 +1,2 @@
-- name: Repo
-  apt_repository: repo="ppa:transmissionbt/ppa" codename="{{codename}}" filename=transmission
-
-- name: apt-get install transmission
-  apt: name=transmission update_cache=yes state=latest
+- name: Install
+  apt: name=transmission

@@ -1,12 +1,14 @@
-- name: Key
-  apt_key: url=https://zoom.us/linux/download/pubkey
+# - name: Key
+#   get_url:
+#     url: https://zoom.us/linux/download/pubkey
+#     dest: /etc/apt/keyrings/zoom.asc
 
-- name: dpkg -i zoom
-  apt: deb=https://zoom.us/client/latest/zoom_amd64.deb
+# - name: dpkg -i zoom
+#   apt: 
+#     deb: https://zoom.us/client/latest/zoom_amd64.deb
   
-- name: Add quick launch icon
-  include_role: name="shared/quick_launch"
-  vars:
-    config: zoom.desktop
-    binary: zoom
-
+# - name: Add quick launch icon
+#   include_role: name="shared/quick_launch"
+#   vars:
+#     config: zoom.desktop
+#     binary: zoom

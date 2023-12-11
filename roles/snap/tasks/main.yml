@@ -1,2 +1,0 @@
-- name: install
-  apt: name=snapd state=latest

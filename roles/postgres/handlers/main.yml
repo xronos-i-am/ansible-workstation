@@ -1,2 +1,0 @@
-- name: restart postgres
-  systemd: name=postgresql state=restarted

@@ -5,7 +5,7 @@
 
 - name: Install packages
   apt: 
-    name: ["build-essential", "autoconf", "libssl-dev", "libyaml-dev", "libreadline7", "libreadline-dev", "zlib1g", "zlib1g-dev", "libjemalloc-dev", "chromium-chromedriver", "sqlite", "libsqlite3-dev"]
+    name: ["libssl-dev", "libreadline-dev", "zlib1g-dev", "autoconf", "bison", "build-essential", "libyaml-dev", "libreadline-dev", "libncurses5-dev", "libffi-dev", "libgdbm-dev"]
     state: latest
 
 # https://stackoverflow.com/a/30191850/2041969
@@ -38,4 +38,3 @@
     - "rbenv global {{get_latest_ruby.stdout}}"
     - "gem install bundler"
   when: rbenv_ruby_check.rc == 1
-  

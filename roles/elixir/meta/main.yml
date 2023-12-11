@@ -1,4 +1,0 @@
----
-dependencies:
-  - { role: asdf }
-  - { role: erlang }

@@ -1,19 +1,20 @@
-- name: Key
-  apt_key: url=https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc
-
 - name: Repo
-  apt_repository: repo="deb https://deb.torproject.org/torproject.org {{codename}} main" state=present filename="tor_browser"
-- name: Repo src
-  apt_repository: repo="deb-src https://deb.torproject.org/torproject.org {{codename}} main" state=present filename="tor_browser"
+  deb822_repository:
+    name: tor
+    types: [deb]
+    uris: "https://deb.torproject.org/torproject.org"
+    signed_by: "https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc"
+    architectures: [amd64]
+    suites: ["{{codename}}"]
+    components: [main]
+    enabled: yes
 
-- name: apt-get install
+- name: Install
   apt: 
-    update_cache: true 
     name: ["tor", "deb.torproject.org-keyring", "torbrowser-launcher"]
-    state: latest
 
-- name: Add quick launch icon
+- name: 
   include_role: name="shared/quick_launch"
   vars:
-    config: "~{{user}}/.local/share/torbrowser/tbb/x86_64/tor-browser_ru/start-tor-browser.desktop"
-    binary: tor-browser
+    config: "/usr/share/applications/torbrowser.desktop"
+    binary: torbrowser
