@@ -55,26 +55,24 @@
     # - { role: git }
     # - { role: google_chrome }
     # - { role: grub }
-#    - { role: i386 }
-    # - { role: keepassxc }
+    # - { role: i386 }
+    - { role: keepassxc }
     # - { role: keyboard_shortcuts }
-#    - { role: lightdm }
     # - { role: mono }
     # - { role: nginx }
-#    - { role: nodejs }
     # - { role: ntp }
     # - { role: opera }
     # - { role: postgres }
     # - { role: python }
     # - { role: rbenv }
-#    - { role: redis }
+    # - { role: redis }
     # - { role: ruby }
     # - { role: sublime_text }
     # - { role: telegram }
     # - { role: tor_browser }
     # - { role: transmission }
 #    - { role: virtualbox }
-#    - { role: wine }
+    - { role: wine }
     # - { role: xfce_panel }
     # - { role: yarn }
-#    - { role: zoom }
+    # - { role: zoom }

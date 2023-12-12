@@ -1,13 +1,18 @@
+- name: Key
+  apt_key:
+    url: https://keys.openpgp.org/vks/v1/by-fingerprint/BF5A669F2272CF4324C1FDA8CFB4C2166397D0D2
+    keyring: /etc/apt/keyrings/keepassxc.asc
+
 - name: Repo
   deb822_repository:
     name: keepassxc
     types: [deb]
     uris: "https://ppa.launchpadcontent.net/phoerious/keepassxc/ubuntu"
-    signed_by: "https://keys.openpgp.org/vks/v1/by-fingerprint/BF5A669F2272CF4324C1FDA8CFB4C2166397D0D2"
+    signed_by: /etc/apt/keyrings/keepassxc.asc
     architectures: [amd64]
     suites: ["{{codename}}"]
     components: [main]
-    enabled: yes
+    enabled: false
 
 - name: Install
   apt: name=keepassxc
@@ -15,7 +20,8 @@
 # - name:
 #   include_role: name="shared/autostart"
 #   vars:
-#     config: keepassxc.desktop
+#     src: /usr/share/applications/org.keepassxc.KeePassXC.desktop
+#     name: keepassxc.desktop
 
 - name: 
   include_role: name="shared/quick_launch"

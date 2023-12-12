@@ -6,7 +6,7 @@
   deb822_repository:
     name: "doublecmd"
     types: [deb]
-    uris: "https://download.docker.com/linux/ubuntu"
+    uris: "https://download.opensuse.org/repositories/home:/Alexx2000/xUbuntu_{{ubuntu_version}}/"
     signed_by: "https://download.opensuse.org/repositories/home:/Alexx2000/xUbuntu_{{ubuntu_version}}/Release.key"
     architectures: [amd64]
     suites: ["/"]

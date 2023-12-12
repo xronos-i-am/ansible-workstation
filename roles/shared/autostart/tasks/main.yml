@@ -1,6 +1,6 @@
 - name: Autostart
   template:
-    src: "{{config}}"
-    dest: "~{{user}}/.config/autostart/{{config}}"
+    src: "{{src}}"
+    dest: "~{{user}}/.config/autostart/{{name}}"
   become: true
   become_user: "{{user}}"    

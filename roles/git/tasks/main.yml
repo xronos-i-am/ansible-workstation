@@ -26,3 +26,9 @@
     - item:
       field: user.email
       value: "{{git_ask_email.user_input}}"
+
+- name: Completions
+  lineinfile: 
+    path: "~{{user}}/.bashrc"
+    regexp: "completions/git"
+    line: "source /usr/share/bash-completion/completions/git"

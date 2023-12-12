@@ -9,9 +9,18 @@
     uris: "https://download.docker.com/linux/ubuntu"
     signed_by: "https://download.docker.com/linux/ubuntu/gpg"
     architectures: [amd64]
-    suites: [nodistro]
-    components: [main]
+    suites: ["{{codename}}"]
+    components: [stable]
 
 - name: Install
   apt:
     name: ["docker-ce", "docker-ce-cli", "containerd.io", "docker-buildx-plugin", "docker-compose-plugin"]
+
+- name: Permissions
+  shell: |
+    groupadd docker
+    usermod -aG docker {{user}}
+    chown {{user}}:{{user}} {{home_path}}/.docker -R
+    chmod g+rwx {{home_path}}/.docker -R
+    chmod 666 /var/run/docker.sock
+  ignore_errors: true

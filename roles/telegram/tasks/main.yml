@@ -5,7 +5,8 @@
 # - name: 
 #   include_role: name="shared/autostart"
 #   vars:
-#     config: telegram.desktop
+#     src: /usr/share/applications/telegramdesktop.desktop
+#     name: telegram.desktop
 
 - name: 
   include_role: name="shared/quick_launch"

@@ -1,27 +1,30 @@
 # https://github.com/jdauphant/ansible-role-packaging/blob/master/tasks/Debian.yml
 # https://wiki.winehq.org/Ubuntu
 
-# https://askubuntu.com/a/1145491/106009
-- name: wine deps
-  apt: 
-    deb: "{{ item }}"
-  with_items:
-    - https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/i386/libfaudio0_19.07-0~bionic_i386.deb
-    - https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/amd64/libfaudio0_19.07-0~bionic_amd64.deb
+- name: Uninstall
+  apt:
+    pkg: "winetricks"
+    purge: yes
+    force: yes
+    state: absent
 
-- name: Key
-  apt_key: url=https://dl.winehq.org/wine-builds/winehq.key
+- name: Deps
+  apt:
+    pkg: ["cabextract", "aria2", "binutils", "fuseiso", "p7zip-full", "pkexec", "tor", "unrar", "unzip", "xdg-utils", "xz-utils", "zenity"]
+    state: "latest"
 
 - name: Repo
-  apt_repository: repo='deb https://dl.winehq.org/wine-builds/ubuntu/ {{codename}} main' filename="wine"
+  deb822_repository:
+    name: "wine"
+    types: [deb]
+    uris: "https://dl.winehq.org/wine-builds/ubuntu"
+    signed_by: "https://dl.winehq.org/wine-builds/winehq.key"
+    architectures: ["amd64", "i386"]
+    suites: ["{{codename}}"]
+    components: [main]
 
-- name: apt-get install winehq-stable
-  apt: name=winehq-stable state=latest install_recommends=yes update_cache=yes
-
-- name: winetrics deps
-  apt: 
-    pkg: ["cabextract"] 
-    state: "latest"
+- name: Install
+  apt: name=winehq-stable install_recommends=yes
 
 - name: winetrics
   get_url:
@@ -49,10 +52,3 @@
     dest: /etc/profile.d/winetricks.sh
     owner: root
     mode: 0755
-
-# - name: Winecfg
-#   command: winecfg
-#   become: yes
-#   become_user: "{{user}}"
-#   args:
-#     chdir: "~{{user}}"
