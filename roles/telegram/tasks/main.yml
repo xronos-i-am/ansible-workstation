@@ -1,15 +1,15 @@
 - name: install
-  apt: 
-    name: telegram-desktop
+  community.general.flatpak:
+    name: org.telegram.desktop
 
-# - name: 
-#   include_role: name="shared/autostart"
-#   vars:
-#     src: /usr/share/applications/telegramdesktop.desktop
-#     name: telegram.desktop
+-
+  include_role: name="shared/autostart"
+  vars:
+    src: /var/lib/flatpak/exports/share/applications/org.telegram.desktop.desktop
+    name: telegram.desktop
 
-- name: 
+-
   include_role: name="shared/quick_launch"
   vars:
-    config: /usr/share/applications/telegramdesktop.desktop
+    config: /var/lib/flatpak/exports/share/applications/org.telegram.desktop.desktop
     binary: telegram

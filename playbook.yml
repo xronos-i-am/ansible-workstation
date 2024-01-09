@@ -68,11 +68,11 @@
     # - { role: redis }
     # - { role: ruby }
     # - { role: sublime_text }
-    # - { role: telegram }
+    - { role: telegram }
     # - { role: tor_browser }
     # - { role: transmission }
 #    - { role: virtualbox }
-    - { role: wine }
+    # - { role: wine }
     # - { role: xfce_panel }
     # - { role: yarn }
     # - { role: zoom }
