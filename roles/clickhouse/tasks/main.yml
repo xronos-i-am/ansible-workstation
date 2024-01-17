@@ -1,0 +1,13 @@
+- name: Repo
+  deb822_repository:
+    name: clickhouse
+    types: [deb]
+    uris: "https://packages.clickhouse.com/deb"
+    signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x8919f6bd2b48d754"
+    architectures: [amd64]
+    suites: ["stable"]
+    components: [main]
+    enabled: yes
+
+- name: Install
+  apt: name=clickhouse-client

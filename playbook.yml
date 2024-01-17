@@ -48,31 +48,32 @@
     - include: tasks/packages.yml
 
   roles:
-    # - { role: asdf }
-    # - { role: chrome_driver }
-    # - { role: docker }
-    # - { role: doublecmd }
-    # - { role: git }
-    # - { role: google_chrome }
-    # - { role: grub }
-    # - { role: i386 }
+    - { role: asdf }
+    - { role: mono }
+    - { role: clickhouse }
+    - { role: chrome_driver }
+    - { role: docker }
+    - { role: doublecmd }
+    - { role: git }
+    - { role: google_chrome }
+    - { role: grub }
+    - { role: i386 }
     - { role: keepassxc }
-    # - { role: keyboard_shortcuts }
-    # - { role: mono }
-    # - { role: nginx }
-    # - { role: ntp }
-    # - { role: opera }
-    # - { role: postgres }
-    # - { role: python }
-    # - { role: rbenv }
-    # - { role: redis }
-    # - { role: ruby }
-    # - { role: sublime_text }
+    - { role: keyboard_shortcuts }
+    - { role: nginx }
+    - { role: ntp }
+    - { role: opera }
+    - { role: postgres }
+    - { role: python }
+    - { role: rbenv }
+    - { role: redis }
+    - { role: ruby }
+    - { role: sublime_text }
     - { role: telegram }
-    # - { role: tor_browser }
-    # - { role: transmission }
-#    - { role: virtualbox }
-    # - { role: wine }
-    # - { role: xfce_panel }
-    # - { role: yarn }
-    # - { role: zoom }
+    - { role: tor_browser }
+    - { role: transmission }
+    # - { role: virtualbox }
+    - { role: wine }
+    - { role: xfce_panel }
+    - { role: yarn }
+    - { role: zoom }
