@@ -1,0 +1,3 @@
+- name: Install
+  apt:
+    deb: https://repo.skype.com/latest/skypeforlinux-64.deb

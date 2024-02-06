@@ -77,3 +77,4 @@
     - { role: xfce_panel }
     - { role: yarn }
     - { role: zoom }
+    - { role: skype }
