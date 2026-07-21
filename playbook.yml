@@ -41,10 +41,10 @@
     - include_tasks: tasks/packages.yml
 
   roles:
-    ##- { role: chrony }
+    - { role: chrony }
     #- { role: mono }
-    ##- { role: doublecmd }
-    ##- { role: git }
+    - { role: doublecmd }
+    - { role: git }
     - { role: google_chrome }
     # - { role: opera }
     - { role: grub }
