@@ -1,15 +1,23 @@
+- name: Download Google Linux Signing GPG Key
+  get_url:
+    url: https://dl.google.com/linux/linux_signing_key.pub
+    dest: /etc/apt/keyrings/google-chrome-keyring.asc
+    mode: '0644'
+
 - name: Repo
   deb822_repository:
     name: "google-chrome"
     types: [deb]
     uris: "https://dl.google.com/linux/chrome/deb/"
-    signed_by: "https://dl.google.com/linux/linux_signing_key.pub"
+    signed_by: /etc/apt/keyrings/google-chrome-keyring.asc
     architectures: [amd64]
     suites: [stable]
     components: [main]
 
 - name: Install
-  apt: name=google-chrome-stable
+  apt: 
+    name: google-chrome-stable
+    update_cache: yes
 
 - name: 
   include_role: name="shared/quick_launch"

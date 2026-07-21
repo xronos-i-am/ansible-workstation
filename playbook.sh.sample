@@ -1,5 +1,0 @@
-# python3 $(which ansible-playbook) --ask-become-pass --extra-vars "user=" ./playbook.yml
-python3 $(which ansible-playbook) --ask-become-pass ./playbook.yml
-sudo dpkg-reconfigure keyboard-configuration
-winecfg
-winetricks

@@ -1,0 +1,6 @@
+- name: Install
+  apt: name=chrony
+
+- name: Set timezone
+  community.general.timezone:
+    name: Europe/Moscow
