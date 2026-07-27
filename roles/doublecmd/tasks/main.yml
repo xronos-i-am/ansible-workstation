@@ -15,8 +15,7 @@
 - name: Install
   apt: name=doublecmd-gtk
 
-- name: 
-  include_role: name="shared/quick_launch"
+- 
+  include_role: name="shared/pin"
   vars:
-    config: /usr/share/applications/doublecmd.desktop
-    binary: doublecmd
+    app: doublecmd

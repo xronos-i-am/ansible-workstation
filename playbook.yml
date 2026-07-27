@@ -1,39 +1,24 @@
 ---
-
 - name: setup workstation
-  hosts: 127.0.0.1
   connection: local
   become: yes
-  gather_facts: no
+  hosts: localhost
 
   pre_tasks:
-    - name: Get ubuntu release
-      command: "sed 's/DISTRIB_CODENAME=//;t;d' /etc/upstream-release/lsb-release"
-      register: get_ubuntu_release
-      changed_when: False
-    - name: Get ubuntu version
-      command: "sed 's/DISTRIB_RELEASE=//;t;d' /etc/upstream-release/lsb-release"
-      register: get_ubuntu_version
-      changed_when: False
-    - name: Get kernel version
-      shell: uname -r
-      register: get_kernel_version
-      changed_when: False
     - locale_gen: name=ru_RU.UTF-8 state=present
     - locale_gen: name=en_US.UTF-8 state=present
 
   vars:
-    codename: "{{get_ubuntu_release.stdout}}"
-    ubuntu_version: "{{get_ubuntu_version.stdout}}"
-    kernel_version: "{{get_kernel_version.stdout}}"
+    codename: "{{ansible_facts['distribution_release']}}"
+    ubuntu_version: "{{ansible_facts['distribution_version']}}"
     user_path: "~{{user}}"
     home_path: "{{user_path | expanduser}}"
 
   vars_prompt:
     - name: user
-      prompt: whoami?
-      private: no
-      default: dev
+      prompt: "Set user"
+      default: "dev" 
+      private: false 
 
   tasks:
     - debug: msg="Ubuntu {{ubuntu_version}} / {{codename}}"
@@ -43,16 +28,16 @@
   roles:
     - { role: chrony }
     #- { role: mono }
+    - { role: google_chrome }
     - { role: doublecmd }
     - { role: git }
-    - { role: google_chrome }
     # - { role: opera }
     - { role: grub }
     - { role: i386 }
+    - { role: telegram }
     - { role: keepassxc }
     #- { role: keyboard_shortcuts }
     - { role: sublime_text }
-    - { role: telegram }
     # - { role: tor_browser }
     # - { role: wine }
     # - { role: zoom }

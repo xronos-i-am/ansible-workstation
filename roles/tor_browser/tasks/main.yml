@@ -12,9 +12,9 @@
 - name: Install
   apt: 
     name: ["tor", "deb.torproject.org-keyring", "torbrowser-launcher"]
+    update_cache: yes
 
-- name: 
-  include_role: name="shared/quick_launch"
+- 
+  include_role: name="shared/pin"
   vars:
-    config: "/usr/share/applications/torbrowser.desktop"
-    binary: torbrowser
+    app: torbrowser

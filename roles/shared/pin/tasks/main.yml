@@ -1,0 +1,24 @@
+- name: get pinned apps
+  command: dbus-run-session gsettings get org.gnome.shell favorite-apps
+  register: get_pinned_apps
+  changed_when: false
+  become: true
+  become_user: "{{ user }}"
+
+- 
+  set_fact:
+    link: "{{ app }}.desktop"
+    current_favorites: "{{ get_pinned_apps.stdout | trim }}"
+
+- name: pin app
+  command:
+    argv:
+      - dbus-run-session
+      - gsettings
+      - set
+      - org.gnome.shell
+      - favorite-apps
+      - "{{ current_favorites | from_yaml | union([link]) | string }}"
+  become: true
+  become_user: "{{ user }}"
+  when: link not in current_favorites

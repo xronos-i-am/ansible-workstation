@@ -2,14 +2,12 @@
   community.general.flatpak:
     name: org.telegram.desktop
 
--
-  include_role: name="shared/autostart"
+- 
+  include_role: name="shared/pin"
   vars:
-    src: /var/lib/flatpak/exports/share/applications/org.telegram.desktop.desktop
-    name: telegram.desktop
+    app: org.telegram.desktop
 
 -
-  include_role: name="shared/quick_launch"
-  vars:
-    config: /var/lib/flatpak/exports/share/applications/org.telegram.desktop.desktop
-    binary: telegram
+ include_role: name="shared/autostart"
+ vars:
+   app: org.telegram.desktop

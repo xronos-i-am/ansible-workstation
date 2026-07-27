@@ -1,10 +1,10 @@
-- name: ask email
+- name: git email
   pause:
     prompt: "GIT email"
   register: git_ask_email
   changed_when: false
 
-- name: ask name
+- name: git name
   pause:
     prompt: "GIT name"
   register: git_ask_name

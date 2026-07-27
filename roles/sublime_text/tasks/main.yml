@@ -10,7 +10,7 @@
     enabled: yes
 
 - name:
-  apt: name=sublime-text
+  apt: name=sublime-text update_cache=yes
 
 - name: Add default editor
   lineinfile: 
@@ -22,8 +22,7 @@
     - "VISUAL"
     - "BUNDLER_EDITOR"
 
-- name: 
-  include_role: name="shared/quick_launch"
+- 
+  include_role: name="shared/pin"
   vars:
-    config: "/usr/share/applications/sublime_text.desktop"
-    binary: sublime_text
+    app: sublime_text

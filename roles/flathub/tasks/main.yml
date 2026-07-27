@@ -1,3 +1,6 @@
+- name: Install flatpak system package
+  apt: name=flatpak
+
 - name: flathub
   community.general.flatpak_remote:
     name: flathub

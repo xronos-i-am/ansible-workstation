@@ -1,6 +1,33 @@
-- name: Autostart
-  template:
-    src: "{{src}}"
-    dest: "~{{user}}/.config/autostart/{{name}}"
+- name: find app config
+  shell: >
+    find /usr/share/applications/ 
+    {{ home_path }}/.local/share/applications/ 
+    /var/lib/snapd/desktop/applications/ 
+    /var/lib/flatpak/exports/share/applications/ 
+    -name "{{ app }}.desktop" -print -quit
+  register: found_apps
+  changed_when: false
+  failed_when: false
+
+- name: set app path
+  set_fact:
+    app_path: "{{ found_apps.stdout | trim }}"
+
+- name: mkdir
+  ansible.builtin.file:
+    path: "{{ home_path }}/.config/autostart"
+    state: directory
+    mode: '0755'
+    owner: "{{ user }}"
+    group: "{{ user }}"
   become: true
-  become_user: "{{user}}"    
+
+- name: add to autostart
+  ansible.builtin.file:
+    src: "{{ app_path }}"
+    dest: "{{ home_path }}/.config/autostart/{{ app }}.desktop"
+    state: link
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: true
+  when: app_path != ''

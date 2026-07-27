@@ -19,8 +19,7 @@
     name: google-chrome-stable
     update_cache: yes
 
-- name: 
-  include_role: name="shared/quick_launch"
+- 
+  include_role: name="shared/pin"
   vars:
-    config: "/usr/share/applications/google-chrome.desktop"
-    binary: google-chrome
+    app: google-chrome
