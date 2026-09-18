@@ -38,6 +38,7 @@
     - { role: keepassxc }
     #- { role: keyboard_shortcuts }
     - { role: sublime_text }
+    - { role: yandex_disk_indicator }
     # - { role: tor_browser }
     # - { role: wine }
     # - { role: zoom }

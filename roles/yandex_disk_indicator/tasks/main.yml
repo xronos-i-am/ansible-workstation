@@ -1,0 +1,28 @@
+- name: deps
+  apt:
+    name: ["python3-gi", "gir1.2-ayatanaappindicator3-0.1"]
+    state: present
+
+# На GNOME под Wayland трея нет: иконку рисует расширение ubuntu-appindicators
+# по протоколу StatusNotifierItem, поэтому индикатор построен на AyatanaAppIndicator3.
+- name: indicator
+  copy:
+    src: yandex-disk-indicator.py
+    dest: /usr/local/bin/yandex-disk-indicator
+    mode: '0755'
+
+- name: autostart dir
+  file:
+    path: "{{home_path}}/.config/autostart"
+    state: directory
+    mode: '0755'
+  become: true
+  become_user: "{{user}}"
+
+- name: autostart
+  copy:
+    src: yandex-disk-indicator.desktop
+    dest: "{{home_path}}/.config/autostart/yandex-disk-indicator.desktop"
+    mode: '0644'
+  become: true
+  become_user: "{{user}}"

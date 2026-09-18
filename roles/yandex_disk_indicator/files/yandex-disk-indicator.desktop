@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Yandex.Disk indicator
+Comment=Статус демона и синхронизации Яндекс.Диска
+Exec=/usr/local/bin/yandex-disk-indicator
+Icon=folder-remote
+Terminal=false
+Categories=Utility;
+X-GNOME-Autostart-enabled=true
