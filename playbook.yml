@@ -27,7 +27,7 @@
 
   roles:
     - { role: chrony }
-    - { role: yandex_browser }
+    - { role: yandex }
     #- { role: mono }
     - { role: google_chrome }
     - { role: doublecmd }
