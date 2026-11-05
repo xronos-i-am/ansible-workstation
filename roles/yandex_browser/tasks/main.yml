@@ -1,0 +1,60 @@
+---
+- name: Legacy Yandex apt files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/yandex-browser.list
+    - /etc/apt/keyrings/yandex-browser.gpg
+    - /etc/apt/keyrings/yandex-disk.gpg
+    - /etc/apt/trusted.gpg.d/yandex-browser-repo.gpg
+
+# Ключи на сайте в текстовом виде: с расширением .gpg apt их не читает.
+# force нужен, чтобы смена ключа дошла до машины: иначе get_url оставит старый файл
+- name: Yandex Browser GPG key
+  get_url:
+    url: https://repo.yandex.ru/yandex-browser/YANDEX-BROWSER-KEY.GPG
+    dest: /etc/apt/keyrings/yandex-browser.asc
+    mode: '0644'
+    force: yes
+
+- name: Yandex Disk GPG key
+  get_url:
+    url: https://repo.yandex.ru/yandex-disk/YANDEX-DISK-KEY.GPG
+    dest: /etc/apt/keyrings/yandex-disk.asc
+    mode: '0644'
+    force: yes
+
+- name: Yandex Browser repo
+  deb822_repository:
+    name: "yandex-browser"
+    types: [deb]
+    uris: "https://repo.yandex.ru/yandex-browser/deb"
+    signed_by: /etc/apt/keyrings/yandex-browser.asc
+    architectures: [amd64]
+    suites: [stable]
+    components: [main]
+
+- name: Yandex Disk repo
+  deb822_repository:
+    name: "yandex-disk"
+    types: [deb]
+    uris: "https://repo.yandex.ru/yandex-disk/deb/"
+    signed_by: /etc/apt/keyrings/yandex-disk.asc
+    architectures: [amd64]
+    suites: [stable]
+    components: [main]
+
+# postinst пакета при каждом обновлении дописывает в этот файл источник по http без Signed-By,
+# если не находит в нём адрес репозитория. Адрес в комментарии отключает эту запись
+- name: Yandex Disk list stub
+  copy:
+    content: "# http://repo.yandex.ru/yandex-disk: источник задан в yandex-disk.sources\n"
+    dest: /etc/apt/sources.list.d/yandex-disk.list
+    mode: '0644'
+
+- name: Install Yandex packages
+  apt:
+    name: [yandex-browser-stable, yandex-disk]
+    state: latest
+    update_cache: yes
